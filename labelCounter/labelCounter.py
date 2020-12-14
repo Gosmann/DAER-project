@@ -4,7 +4,7 @@ Created on Sat Oct 31 2020
 
 @author: Felipe Fitarelli
 """
-import os, re, copy, csv
+import os, re, copy, csv, math
 
 dir_images = 'images\\' #Aqui pode-se trocar o nome da pasta das imagens
 name_out_csv = 'saida' #Aqui pode-se trocar o nome do arquivo CSV de saída
@@ -40,6 +40,8 @@ for root, direct, fil in os.walk(dirImag):
     for folder in direct:
         folders.append(folder)
 
+tags=len(fil)/2
+
 lista=[]
 finalList=[]
 header=[]
@@ -53,7 +55,9 @@ finalList.append(header)
 
 imageCount = 0
 objectsCount = 0
-#Em cada uma das subpastas faz a contagem 
+imagePercent = 0
+oldImagePercent = 0
+#Em cada uma das subpastas faz a contagem
 for fol in folders:
     files = []
     
@@ -95,6 +99,12 @@ for fol in folders:
         
         f_imag.close()
         imageCount += 1
+        
+        #Exibe o progresso de conversão
+        imagePercent = math.trunc((imageCount/tags)*100)
+        if(imagePercent > oldImagePercent):
+            print("Progresso: " + str(imagePercent) + "%")
+            oldImagePercent = imagePercent
 
 #Cria o arquivo final CSV
 os.chdir(dirname)
