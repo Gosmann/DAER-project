@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sat Oct 31 2020
-
-@author: Felipe Fitarelli
+@author: Gabriel Gosmann
 """
 import os, re, copy, csv, shutil
 import glob, numpy as np
 
 
-dir_yolo_raw = '1/' #Aqui pode-se trocar o nome da pasta das imagens
-dir_filtered = '/1_filtered' #Aqui pode-se trocar o nome do arquivo CSV de saída
+dir_yolo_raw = '1/' #Pasta de entrada
+dir_filtered = '/1_filtered' #Pasta de saída
 
 len_yolo_raw = len(glob.glob(dir_yolo_raw+"/*.txt"))
 files_yolo_raw = glob.glob(dir_yolo_raw+"/*.txt")
@@ -28,10 +26,10 @@ yolo_selected = []
 # 2 -> BUS
 # 3 -> MOTORCYCLE
 
-goal_car = 50
-goal_truck = 50
-goal_bus = 50
-goal_motorcycle = 10
+goal_car = 500
+goal_truck = 500
+goal_bus = 500
+goal_motorcycle = 500
 
 goals = [goal_car, goal_truck, goal_bus, goal_motorcycle]
 
@@ -54,7 +52,8 @@ for x in range(len_yolo_raw):
         print("************************************")
         print("TODOS OBJETOS RECOLHIDOS COM SUCESSO")
         print("************************************")
-
+        yolo_selected.append(yolo_names[x])
+        
         break
     
     elif ( all ( i >= 0 for i in goals ) ):    # verifica se todos são maiores que zero
@@ -68,7 +67,7 @@ for x in range (len(yolo_selected)):
     yolo_jpg = yolo_selected[x]
     yolo_jpg = yolo_jpg[:-4] 
     #print(yolo_jpg)
-    print (yolo_selected[x])    
+    #print (yolo_selected[x])    
     # target filename is /dst/dir/file.ext
     shutil.copy('1/'+yolo_selected[x], '1_filtered/')
     shutil.copy('1/'+yolo_jpg+'.jpg', '1_filtered/') 
