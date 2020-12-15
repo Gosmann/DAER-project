@@ -34,13 +34,13 @@ for line in f_classes:
 dirImag = os.path.join(dirname, dir_images)
 os.chdir(dirImag)
 
+tags=0
 #Salva todas as subpastas
 folders = []
 for root, direct, fil in os.walk(dirImag):
     for folder in direct:
         folders.append(folder)
-
-tags=len(fil)/2
+    tags += len(fil)/2
 
 lista=[]
 finalList=[]
