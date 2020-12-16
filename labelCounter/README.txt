@@ -1,6 +1,4 @@
 """
-Created on Sat Oct 31 2020
-
 @author: Felipe Fitarelli
 """
 
