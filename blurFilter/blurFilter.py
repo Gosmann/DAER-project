@@ -6,6 +6,7 @@
 import cv2, shutil, glob, math, copy, numpy as np
 import matplotlib.pyplot as plt
 from shapely.geometry import Polygon, box
+from PIL import Image, ImageFilter
 
 dir_yolo_raw = 'Input/' #Pasta de entrada
 dir_striped = '/Output' #Pasta de saída
@@ -91,8 +92,11 @@ for temp in range(len_yolo_raw):
     #Quantidade de classes diferentes presentes no arquivo .txt
     qtClassesInFile = len(list(filter(None,classes)))
     
-    img = cv2.imread(file_jpg)
-    dh, dw, _ = img.shape
+    #img = cv2.imread(file_jpg)
+    #dh, dw, _ = img.shape
+    
+    img = Image.open(file_jpg)
+    dw, dh = img.size
     
     hadAlteration = False
     #Apenas faz alterações se há mais de uma classe e não há interseções entre as bounding boxes
@@ -143,7 +147,10 @@ for temp in range(len_yolo_raw):
                             if b > dh - 1:
                                 b = dh - 1
                         
-                            cv2.rectangle(modImg, (l, t), (r, b), (0, 0, 0), -1)
+                            #cv2.rectangle(modImg, (l, t), (r, b), (0, 0, 0), -1)
+                            cropped_image = modImg.crop((l,t,r,b))
+                            blurred_image = cropped_image.filter(ImageFilter.GaussianBlur(radius=7))
+                            modImg.paste(blurred_image,(l,t,r,b))
                             hadAlteration = True
                             
                 if(hadAlteration):
@@ -151,7 +158,8 @@ for temp in range(len_yolo_raw):
                     #plt.show()
                             
                     final_image = "Output/" +  file_name + "-" + str(pos1) + ".jpg"
-                    cv2.imwrite(final_image, modImg)
+                    #cv2.imwrite(final_image, modImg)
+                    modImg.save(final_image)
                     hadAlteration = False
     else:
         shutil.copy(file_jpg, 'Output/')
