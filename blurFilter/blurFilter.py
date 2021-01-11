@@ -157,7 +157,7 @@ for temp in range(len_yolo_raw):
                     #plt.imshow(img)
                     #plt.show()
                             
-                    final_image = "Output/" +  file_name + "-" + str(pos1) + ".jpg"
+                    final_image = "Output/" + file_name + "-" + str(pos1) + ".jpg"
                     #cv2.imwrite(final_image, modImg)
                     modImg.save(final_image)
                     hadAlteration = False

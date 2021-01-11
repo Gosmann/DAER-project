@@ -1,0 +1,9 @@
+====== TOTAL INFO ======
+Total images: 577
+Total objects: 860
+
+====== TOTAL OBJECTS BY CLASS ======
+Car: 215
+Truck: 215
+Bus: 215
+Motorcycle: 215

@@ -26,10 +26,10 @@ yolo_selected = []
 # 2 -> BUS
 # 3 -> MOTORCYCLE
 
-goal_car = 500
-goal_truck = 500
-goal_bus = 500
-goal_motorcycle = 500
+goal_car = 215
+goal_truck = 215
+goal_bus = 215
+goal_motorcycle = 215
 
 goals = [goal_car, goal_truck, goal_bus, goal_motorcycle]
 
@@ -66,7 +66,7 @@ for x in range(len_yolo_raw):
 for x in range (len(yolo_selected)):
     yolo_jpg = yolo_selected[x]
     yolo_jpg = yolo_jpg[:-4] 
-    #print(yolo_jpg)
+    print(yolo_jpg)
     #print (yolo_selected[x])    
     # target filename is /dst/dir/file.ext
     shutil.copy('1/'+yolo_selected[x], '1_filtered/')

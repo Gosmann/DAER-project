@@ -26,7 +26,7 @@ yolo_selected = []
 # 1 -> TRUCK
 # 2 -> BUS
 # 3 -> MOTORCYCLE
-target_class = 3
+target_class = 0
 
 files = 0
 margin_x = 2

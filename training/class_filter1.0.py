@@ -43,27 +43,36 @@ while (x < len_yolo_raw):
     temp_string = files_yolo_raw[x]
     yolo_names[x] = temp_string[2:]
     #print (yolo_names[x])
-    print (str(goals)+" "+str(x))
+    print (str(goals)+" "+str(x)+" "+yolo_names[x]+" "+str(len(yolo_selected)))
 
     matrix = np.loadtxt(dir_yolo_raw+yolo_names[x], usecols=range(5))
     #print(matrix.ndim)
     if (matrix.ndim == 1):
         matrix = matrix.reshape(1, 5)
 
+    flag_found = 0
     for y in range (int(matrix.size/5)):
-        #print(matrix[y,0])
-        if(matrix[y, 0] == rank[state]):  #found motorcycle
-            flag_found = 1
-            yolo_selected.append(yolo_names[x])
-            for y in range (int(matrix.size/5)):
-                goals[int(matrix[y,0])] -= 1
+        if(flag_found == 0 and not(yolo_names[x] in yolo_selected)  ):
+            #print(int(matrix.size/5))
+            if(matrix[y, 0] == rank[state]):  #found motorcycle
                 
-    
+                for y in range (int(matrix.size/5)):
+                    goals[int(matrix[y][0])] -= 1
+                    
+                if(goals[int(matrix[y][0])] < 0):
+                    for y in range (int(matrix.size/5)):
+                        goals[int(matrix[y][0])] += 1
+                else:
+                    flag_found = 1
+                    yolo_selected.append(yolo_names[x])
+                    
+                
     if ( all ( i == 0 for i in goals ) ):
         print("************************************")
         print("TODOS OBJETOS RECOLHIDOS COM SUCESSO")
         print("************************************")
         yolo_selected.append(yolo_names[x])
+        print (str(goals)+" "+str(x)+" "+yolo_names[x]+" "+str(len(yolo_selected)))
         break
 
     if(goals[rank[state]] <= 0):   
@@ -89,6 +98,7 @@ while (x < len_yolo_raw):
             print("************************************")
             print("!!! OBJETIVO DE CARROS CONLUIDO !!!!")
             print("************************************")
+            print (str(goals)+" "+str(x)+" "+yolo_names[x]+" "+str(len(yolo_selected)))
             break
             state = 4
             x=0            
@@ -106,7 +116,7 @@ for x in range (len(yolo_selected)):
     yolo_jpg = yolo_selected[x]
     yolo_jpg = yolo_jpg[:-4] 
     #print(yolo_jpg)
-    print (yolo_selected[x])    
+    #print (yolo_selected[x])    
     # target filename is /dst/dir/file.ext
     shutil.copy('1/'+yolo_selected[x], '1_filtered/')
     shutil.copy('1/'+yolo_jpg+'.jpg', '1_filtered/') 
