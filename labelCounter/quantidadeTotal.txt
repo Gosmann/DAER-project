@@ -1,5 +1,5 @@
 ====== TOTAL INFO ======
-Total images: 577
+Total images: 568
 Total objects: 860
 
 ====== TOTAL OBJECTS BY CLASS ======
